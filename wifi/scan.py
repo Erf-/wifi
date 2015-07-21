@@ -20,18 +20,21 @@ class Cell(object):
         return 'Cell(ssid={ssid})'.format(**vars(self))
 
     @classmethod
-    def all(cls, interface):
+    def all(cls, interface, sudo=False):
         """
         Returns a list of all cells extracted from the output of iwlist.
         """
+        args = ['/sbin/iwlist', interface, 'scan']
+        if sudo:
+            args.insert(0, 'sudo')
         try:
-            iwlist_scan = subprocess.check_output(['/sbin/iwlist', interface, 'scan'],
+            iwlist_scan = subprocess.check_output(args,
                                                   stderr=subprocess.STDOUT)
         except subprocess.CalledProcessError as e:
             raise InterfaceError(e.output.strip())
         else:
             iwlist_scan = iwlist_scan.decode('utf-8')
-        cells = map(Cell.from_string, cells_re.split(iwlist_scan)[1:])
+            cells = map(Cell.from_string, cells_re.split(iwlist_scan)[1:])
 
         return cells
 
@@ -154,3 +157,7 @@ def normalize(cell_block):
         cell.encryption_type = 'wep'
 
     return cell
+
+# all with sudo arg does not work
+# Everything is ok when launched in admin mode
+# Seems to depend on distribution, worked on xubuntu...
