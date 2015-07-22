@@ -1,9 +1,13 @@
 #code implementing the tests variables of each class
 
 from wifi import subprocess_compat as subprocess
+from wifi.scheme import Scheme
 
 class ScanTesting(object):
-    args = ['sudo', '/sbin/iwlist', 'interface', 'scan']
+    args_ws = ['sudo', '/sbin/iwlist', 'interface', 'scan']
+    args_ls = ['/sbin/iwlist', 'interface', 'scan']
+    #args_ls : args_less_sudo
+    #args_ws : args_with_sudo
     kwargs = {'stderr':subprocess.STDOUT} #, 'stdout':PIPE}
     output = """Scan completed :
           Cell 01 - Address: C4:04:15:8D:E2:26
@@ -193,3 +197,4 @@ class ScanTesting(object):
                     IE: Unknown: 2F0100
                     IE: Unknown: 32080C1218243048606C
                     IE: Unknown: DD09001018020010000000"""
+
