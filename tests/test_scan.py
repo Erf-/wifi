@@ -4,7 +4,7 @@ from wifi.scan import Cell
 from wifi import subprocess_compat as subprocess
 from wifi.subprocess_compat import check_output
 from mock import Mock, MagicMock
-from wifi.dummydata import ScanTesting as scan
+from dummydata import ScanTesting as scan
 
 class ScanTest(TestCase):
     def test_all_calls_check_output_with_good_args(self):
