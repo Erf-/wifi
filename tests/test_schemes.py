@@ -63,9 +63,9 @@ class TestActivation(TestCase):
     def test_activate_is_called_with_good_args(self):
         subprocess.check_output = MagicMock(return_value=sch.SUCCESSFUL_IFUP_OUTPUT)
         sch.scheme.activate(True)
-        #subprocess.check_output.assert_called_with(sch.args_ws, **sch.kwargs)
-        #sch.scheme.activate()
-        #subprocess.check_output.assert_called_with(sch.args_ls, **sch.kwargs)
+        subprocess.check_output.assert_called_with(sch.args_ws, **sch.kwargs)
+        sch.scheme.activate()
+        subprocess.check_output.assert_called_with(sch.args_ls, **sch.kwargs)
 
 
 class TestForCell(TestCase):

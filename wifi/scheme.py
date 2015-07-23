@@ -168,12 +168,11 @@ class Scheme(object):
         """
         Connects to the network as configured in this scheme.
         """
-
         args = ['/sbin/ifdown', self.interface]
-        #if sudo:
-            #args.insert(0, 'sudo')
-        subprocess.check_output(args, stderr=subprocess.STDOUT)
-        ifup_output = subprocess.check_output(['/sbin/ifup'] + self.as_args(), stderr=subprocess.STDOUT)
+        if sudo:
+            args.insert(0, 'sudo')
+        subprocess.check_output(args, stderr=subprocess.STDOUT)#role?
+        ifup_output = subprocess.check_output(args + self.as_args(), stderr=subprocess.STDOUT)
         ifup_output = ifup_output.decode('utf-8')
 
         return self.parse_ifup_output(ifup_output)

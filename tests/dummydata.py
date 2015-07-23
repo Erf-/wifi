@@ -200,8 +200,8 @@ class ScanTesting(object):
                     IE: Unknown: DD09001018020010000000"""
 
 class SchemeTesting(object):
-    args_ws = ['sudo', '/sbin/ifdown', 'wlan0=wlan0-test']
-    args_ls = ['/sbin/ifdown', 'wlan0=wlan0-test']
+    args_ws = ['sudo', '/sbin/ifdown', 'wlan0', 'wlan0=wlan0-test']
+    args_ls = ['/sbin/ifdown', 'wlan0', 'wlan0=wlan0-test']
     kwargs = {'stderr':subprocess.STDOUT}
     cell = Cell()
     scheme = Scheme('wlan0', 'test')
