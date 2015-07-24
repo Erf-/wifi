@@ -33,7 +33,8 @@ class TestSchemes(TestCase):
             'wpa-ssid': 'workwifi',
         })
 
-        self.assertEqual(str(sch.scheme), 'iface wlan0-test inet dhcp\n    wpa-ssid workwifi\n')
+        self.assertEqual(str(sch.scheme), 
+        'iface wlan0-test inet dhcp\n    wpa-ssid workwifi\n')
 
     def test_find(self):
         work = self.Scheme.find('wlan0', 'work')
@@ -58,14 +59,17 @@ class TestActivation(TestCase):
         self.assertEqual(connection.ip_address, '192.168.1.113')
 
     def test_failed_connection(self):
-        self.assertRaises(ConnectionError, sch.scheme.parse_ifup_output, sch.FAILED_IFUP_OUTPUT)
+        self.assertRaises(ConnectionError, sch.scheme.parse_ifup_output,
+        sch.FAILED_IFUP_OUTPUT)
 
     def test_activate_is_called_with_good_args(self):
         subprocess.check_output = MagicMock(return_value=sch.SUCCESSFUL_IFUP_OUTPUT)
         sch.scheme.activate(True)
-        subprocess.check_output.assert_called_with(sch.args_ws, **sch.kwargs)
+        subprocess.check_output.assert_called_with(sch.args_ws,
+        **sch.kwargs)
         sch.scheme.activate()
-        subprocess.check_output.assert_called_with(sch.args_ls, **sch.kwargs)
+        subprocess.check_output.assert_called_with(sch.args_ls,
+        **sch.kwargs)
 
 
 class TestForCell(TestCase):
@@ -86,7 +90,9 @@ class TestForCell(TestCase):
         sch.cell.encryption_type = 'wep'
 
         # hex key lengths: 10, 26, 32, 58
-        hex_keys = ("01234567ab", "0123456789abc" * 2, "0123456789abcdef" * 2, "0123456789abc" * 2 + "0123456789abcdef" * 2)
+        hex_keys = ("01234567ab", "0123456789abc" * 2,
+        "0123456789abcdef" * 2,
+        "0123456789abc" * 2 + "0123456789abcdef" * 2)
         for key in hex_keys:
             sch.scheme = Scheme.for_cell('wlan0', 'test', sch.cell, key)
 
