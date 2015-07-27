@@ -5,6 +5,9 @@ import os
 from wifi import Cell
 from wifi.scheme import extract_schemes, Scheme
 from wifi.exceptions import ConnectionError
+from wifi import subprocess_compat as subprocess
+from wifi.subprocess_compat import check_output
+from mock import MagicMock
 
 
 NETWORK_INTERFACES_FILE = """
@@ -98,6 +101,19 @@ class TestActivation(TestCase):
     def test_failed_connection(self):
         scheme = Scheme('wlan0', 'test')
         self.assertRaises(ConnectionError, scheme.parse_ifup_output, FAILED_IFUP_OUTPUT)
+
+    def test_activate_is_called_with_good_args(self):
+        args = ['sudo', '/sbin/ifdown', 'wlan0', 'wlan0=wlan0-test']
+        kwargs = {'stderr':subprocess.STDOUT}
+        scheme = Scheme('wlan0', 'test')
+        subprocess.check_output = MagicMock(return_value=SUCCESSFUL_IFUP_OUTPUT)
+        scheme.activate(True)
+        subprocess.check_output.assert_called_with(args,
+        **kwargs)
+        args = ['/sbin/ifdown', 'wlan0', 'wlan0=wlan0-test']
+        scheme.activate()
+        subprocess.check_output.assert_called_with(args,
+        **kwargs)
 
 
 class TestForCell(TestCase):
@@ -218,3 +234,4 @@ DHCPDISCOVER on wlan0 to 255.255.255.255 port 67 interval 12
 No DHCPOFFERS received.
 No working leases in persistent database - sleeping.
 """
+

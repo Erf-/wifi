@@ -2,6 +2,7 @@ from unittest import TestCase
 
 from wifi.scan import Cell
 from wifi.exceptions import InterfaceError
+import string
 
 
 class IWListParserTest(TestCase):
@@ -67,7 +68,7 @@ class IWListParserTest(TestCase):
 
 class ScanningTest(TestCase):
     def test_scanning(self):
-        self.assertRaises(InterfaceError, Cell.all, 'fake-interface')
+        self.assertRaises(InterfaceError, Cell.all, 'fake-interface')#test fails
 
 
 IWLIST_SCAN_NO_ENCRYPTION = """Cell 02 - Address: 38:83:45:CC:58:74
@@ -278,3 +279,15 @@ ABSOLUTE_QUALITY = """Cell 04 - Address: 50:06:04:C3:4D:93
                     Encryption key:off
                     Bit Rates:144 Mb/s
 """
+
+output = string.join([IWLIST_SCAN_NO_ENCRYPTION,
+IWLIST_SCAN_WEP,
+IWLIST_SCAN_WPA2,
+IWLIST_SCAN_WPA1,
+ALTERNATIVE_OUTPUT,
+ALTERNATIVE_OUTPUT2,
+NONAME_WIRELESS_NETWORK,
+NO_CHANNEL_OUTPUT,
+LIST_INDEX_ERROR,
+FREQUENCY_NO_CHANNEL_OUTPUT,
+ABSOLUTE_QUALITY], '\n')
