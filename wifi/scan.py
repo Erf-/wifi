@@ -34,7 +34,7 @@ class Cell(object):
             raise InterfaceError(e.output.strip())
         else:
             iwlist_scan = iwlist_scan.decode('utf-8')
-            cells = map(Cell.from_string, cells_re.split(iwlist_scan)[1:])
+        cells = map(Cell.from_string, cells_re.split(iwlist_scan)[1:])
 
         return cells
 

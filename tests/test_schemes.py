@@ -6,7 +6,6 @@ from wifi import Cell
 from wifi.scheme import extract_schemes, Scheme
 from wifi.exceptions import ConnectionError
 from wifi import subprocess_compat as subprocess
-from wifi.subprocess_compat import check_output
 from mock import MagicMock
 
 

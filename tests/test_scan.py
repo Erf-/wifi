@@ -2,7 +2,6 @@ from unittest import TestCase
 
 from wifi.scan import Cell
 from wifi import subprocess_compat as subprocess
-from wifi.subprocess_compat import check_output
 from mock import MagicMock
 from test_parsing import output
 
